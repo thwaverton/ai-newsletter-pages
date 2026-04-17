@@ -12,10 +12,21 @@ LATEST = ROOT / "data" / "latest.json"
 def build_html(data):
     def section(title, items):
         lis = "".join(
-            f"<li><a href='{i['url']}'>{i['title']}</a><br><small>{i.get('source','')} · {i.get('published_at','')}</small><p>{i.get('summary','')}</p></li>"
+            (
+                f"<li><a href='{i['url']}'>{i['title']}</a>"
+                f"<br><small>{i.get('source','')} · {i.get('published_at','')}</small>"
+                f"<p>{i.get('summary','')}</p>"
+                f"{build_scholar_link(i)}</li>"
+            )
             for i in items
         )
         return f"<h2>{title}</h2><ul>{lis}</ul>"
+
+    def build_scholar_link(item):
+        scholar_url = item.get("scholar_url")
+        if not scholar_url:
+            return ""
+        return f"<p><a href='{scholar_url}'>Buscar no Google Academico</a></p>"
 
     return f"""
     <html>
@@ -23,6 +34,7 @@ def build_html(data):
         <h1>Newsletter diária de IA</h1>
         <p>Gerada em: {data['generated_at']}</p>
         {section('Papers', data['papers'])}
+        {section('Pesquisas e Google Academico', data.get('scholar', []))}
         {section('Notícias', data['news'])}
         {section('Artigos e blogs', data['blogs'])}
       </body>

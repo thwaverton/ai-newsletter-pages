@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import json
 import os
-import time
-from datetime import datetime, timezone
+import re
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
+from html import unescape
 from pathlib import Path
 from urllib.parse import quote_plus
 
@@ -43,6 +44,13 @@ BLOG_FEEDS = [
     "https://www.anthropic.com/news/rss.xml",
 ]
 
+CROSSREF_API_URL = "https://api.crossref.org/works"
+CROSSREF_QUERY = '"artificial intelligence" machine learning "large language model" "generative AI" multimodal reasoning'
+CROSSREF_DAYS_BACK = int(os.environ.get("CROSSREF_DAYS_BACK", "10"))
+REQUEST_HEADERS = {
+    "User-Agent": "ai-daily-digest/1.0 (+https://thwaverton.github.io/ai-newsletter-pages/)"
+}
+
 
 def to_iso(value):
     if not value:
@@ -58,7 +66,67 @@ def to_iso(value):
 
 
 def clean_text(text):
-    return " ".join((text or "").replace("\n", " ").split())
+    if not text:
+        return ""
+    text = unescape(text)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return " ".join(text.replace("\n", " ").split())
+
+
+def iso_now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def scholar_search_url(query):
+    return "https://scholar.google.com/scholar?q=" + quote_plus(query or "")
+
+
+def date_parts_to_iso(parts):
+    if not parts:
+        return None
+    try:
+        normalized = list(parts[:3]) + [1] * (3 - len(parts[:3]))
+        return datetime(normalized[0], normalized[1], normalized[2], tzinfo=timezone.utc).isoformat()
+    except Exception:
+        return None
+
+
+def choose_crossref_date(item):
+    for key in ("published-print", "published-online", "issued", "created"):
+        value = item.get(key, {})
+        date_parts = (value.get("date-parts") or [[]])[0]
+        parsed = date_parts_to_iso(date_parts)
+        if parsed:
+            return parsed
+    return None
+
+
+def iso_to_date(value):
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).date()
+    except ValueError:
+        return None
+
+
+def request_json(url, params=None):
+    res = requests.get(url, params=params, headers=REQUEST_HEADERS, timeout=30)
+    res.raise_for_status()
+    return res.json()
+
+
+def crossref_summary(item):
+    abstract = clean_text(item.get("abstract"))
+    if abstract:
+        return abstract[:400]
+
+    journal = clean_text((item.get("container-title") or [""])[0])
+    publisher = clean_text(item.get("publisher"))
+    parts = [part for part in [journal, publisher] if part]
+    if parts:
+        return f"Publicado em {' · '.join(parts[:2])}."
+    return "Artigo academico recente relacionado a IA."
 
 
 def score_item(title, summary=""):
@@ -81,9 +149,10 @@ def fallback_items(kind):
             "title": "Exemplo de paper de IA",
             "summary": "Este item aparece como placeholder ate a primeira execucao online do workflow no GitHub Actions.",
             "url": "https://arxiv.org/",
-            "published_at": datetime.now(timezone.utc).isoformat(),
+            "published_at": iso_now(),
             "authors": ["Autor Exemplo"],
             "score": 1,
+            "scholar_url": scholar_search_url("paper de IA"),
         }],
         "news": [{
             "source": "Google News",
@@ -91,7 +160,7 @@ def fallback_items(kind):
             "title": "Exemplo de noticia de IA",
             "summary": "Placeholder inicial. Assim que o workflow rodar online, este conteudo sera substituido por dados reais.",
             "url": "https://news.google.com/",
-            "published_at": datetime.now(timezone.utc).isoformat(),
+            "published_at": iso_now(),
             "score": 1,
         }],
         "research_blog": [{
@@ -100,8 +169,19 @@ def fallback_items(kind):
             "title": "Exemplo de artigo ou blog de pesquisa",
             "summary": "Placeholder inicial para o primeiro deploy do projeto.",
             "url": "https://openai.com/news/",
-            "published_at": datetime.now(timezone.utc).isoformat(),
+            "published_at": iso_now(),
             "score": 1,
+        }],
+        "scholar": [{
+            "source": "Crossref",
+            "type": "scholar",
+            "title": "Exemplo de pesquisa academica em IA",
+            "summary": "Secao academica inicial. No deploy online, ela sera atualizada com artigos recentes e atalho de busca no Google Academico.",
+            "url": "https://api.crossref.org/",
+            "published_at": iso_now(),
+            "authors": ["Pesquisador Exemplo"],
+            "score": 1,
+            "scholar_url": scholar_search_url("pesquisa academica IA"),
         }],
     }
     return base[kind]
@@ -163,14 +243,82 @@ def fetch_blogs():
     return (items[:10] or fallback_items("research_blog"))
 
 
-def build_digest(papers, news, blogs):
+def fetch_crossref_research():
+    until_date = datetime.now(timezone.utc).date()
+    from_date = until_date - timedelta(days=CROSSREF_DAYS_BACK)
+    params = {
+        "query": CROSSREF_QUERY,
+        "filter": f"from-pub-date:{from_date.isoformat()},until-pub-date:{until_date.isoformat()},type:journal-article,type:proceedings-article",
+        "sort": "published",
+        "order": "desc",
+        "rows": 25,
+    }
+    try:
+        data = request_json(CROSSREF_API_URL, params=params)
+    except requests.RequestException:
+        return fallback_items("scholar")
+
+    items = []
+    for entry in data.get("message", {}).get("items", []):
+        title = clean_text((entry.get("title") or [""])[0])
+        if not title:
+            continue
+
+        summary = crossref_summary(entry)
+        published_at = choose_crossref_date(entry)
+        published_date = iso_to_date(published_at)
+        if not published_date or published_date < from_date or published_date > until_date:
+            continue
+
+        authors = []
+        for author in entry.get("author", [])[:6]:
+            full_name = " ".join(part for part in [author.get("given", ""), author.get("family", "")] if part).strip()
+            if full_name:
+                authors.append(full_name)
+
+        doi = clean_text(entry.get("DOI"))
+        url = entry.get("URL") or (f"https://doi.org/{doi}" if doi else None)
+        if not url:
+            continue
+
+        journal = clean_text((entry.get("container-title") or [""])[0])
+        publisher = clean_text(entry.get("publisher"))
+        source = journal or publisher or "Crossref"
+        score = score_item(title, summary)
+
+        items.append({
+            "source": source,
+            "type": "scholar",
+            "title": title,
+            "summary": summary,
+            "url": url,
+            "published_at": published_at,
+            "authors": authors,
+            "score": score + 1,
+            "scholar_url": scholar_search_url(title),
+        })
+
+    ranked = [
+        item for item in sorted(
+            items,
+            key=lambda x: (x.get("score", 0), x.get("published_at") or ""),
+            reverse=True,
+        )
+        if item.get("score", 0) >= 2
+    ]
+    return ranked[:8] or fallback_items("scholar")
+
+
+def build_digest(papers, news, blogs, scholar):
     return {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": iso_now(),
         "papers": sorted(papers, key=lambda x: (x.get("score", 0), x.get("published_at") or ""), reverse=True)[:6],
         "news": sorted(news, key=lambda x: (x.get("score", 0), x.get("published_at") or ""), reverse=True)[:6],
         "blogs": blogs[:6],
+        "scholar": scholar[:6],
         "notes": [
             "LinkedIn nao foi automatizado neste MVP porque scraping de posts e instavel e depende de ferramentas externas ou conta autenticada.",
+            "Google Academico nao oferece um feed publico estavel para esse fluxo. Esta secao usa Crossref para achar artigos recentes e inclui atalho de busca por titulo no Google Academico.",
             "Para e-mail diario, configure os secrets opcionais do workflow.",
         ],
     }
@@ -180,7 +328,8 @@ def main():
     papers = fetch_arxiv()
     news = fetch_google_news()
     blogs = fetch_blogs()
-    digest = build_digest(papers, news, blogs)
+    scholar = fetch_crossref_research()
+    digest = build_digest(papers, news, blogs, scholar)
 
     for out_dir in (DATA_DIR, SITE_DATA_DIR):
         (out_dir / "latest.json").write_text(json.dumps(digest, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -189,6 +338,7 @@ def main():
         "papers": len(digest["papers"]),
         "news": len(digest["news"]),
         "blogs": len(digest["blogs"]),
+        "scholar": len(digest["scholar"]),
         "generated_at": digest["generated_at"],
     }, ensure_ascii=False))
 

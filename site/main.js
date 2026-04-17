@@ -4,6 +4,7 @@ async function loadDigest() {
 
   document.getElementById('generatedAt').textContent = new Date(data.generated_at).toLocaleString('pt-BR');
   renderCards('papers', data.papers);
+  renderCards('scholar', data.scholar);
   renderCards('news', data.news);
   renderCards('blogs', data.blogs);
 
@@ -28,9 +29,21 @@ function renderCards(targetId, items) {
       <h3><a href="${item.url}" target="_blank" rel="noreferrer">${item.title}</a></h3>
       <p>${item.summary || ''}</p>
       <div class="footer">${formatMeta(item)}</div>
+      ${renderActions(item)}
     `;
     root.appendChild(card);
   });
+}
+
+function renderActions(item) {
+  if (!item.scholar_url) {
+    return '';
+  }
+  return `
+    <div class="actions">
+      <a href="${item.scholar_url}" target="_blank" rel="noreferrer">Abrir no Google Acadêmico</a>
+    </div>
+  `;
 }
 
 function formatMeta(item) {
