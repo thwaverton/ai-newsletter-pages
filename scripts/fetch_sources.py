@@ -49,15 +49,108 @@ CROSSREF_QUERY = '"artificial intelligence" machine learning "large language mod
 CROSSREF_DAYS_BACK = int(os.environ.get("CROSSREF_DAYS_BACK", "10"))
 SERPAPI_API_URL = "https://serpapi.com/search.json"
 SERPAPI_API_KEY = os.environ.get("SERPAPI_API_KEY")
-SERPAPI_SCHOLAR_QUERY = os.environ.get(
-    "SERPAPI_SCHOLAR_QUERY",
-    '"artificial intelligence" OR "machine learning" OR "large language model" OR "generative ai"',
-)
 SERPAPI_SCHOLAR_HL = os.environ.get("SERPAPI_SCHOLAR_HL", "en")
-SERPAPI_SCHOLAR_NUM = max(1, min(20, int(os.environ.get("SERPAPI_SCHOLAR_NUM", "20"))))
+SERPAPI_SCHOLAR_NUM = max(1, min(20, int(os.environ.get("SERPAPI_SCHOLAR_NUM", "10"))))
 REQUEST_HEADERS = {
     "User-Agent": "ai-daily-digest/1.0 (+https://thwaverton.github.io/ai-newsletter-pages/)"
 }
+
+AI_PRIMARY_TERMS = [
+    "artificial intelligence",
+    "machine learning",
+    "deep learning",
+    "large language model",
+    "large language models",
+    "language model",
+    "language models",
+    "llm",
+    "llms",
+    "generative ai",
+    "foundation model",
+    "foundation models",
+    "multimodal",
+    "transformer",
+    "transformers",
+    "computer vision",
+    "natural language processing",
+    "nlp",
+    "reinforcement learning",
+    "diffusion model",
+    "diffusion models",
+    "neural network",
+    "neural networks",
+]
+
+AI_SECONDARY_TERMS = [
+    "agent",
+    "agents",
+    "agentic",
+    "reasoning",
+    "benchmark",
+    "alignment",
+    "vision-language",
+    "vision language",
+    "speech recognition",
+    "speech synthesis",
+    "text-to-image",
+    "text to image",
+    "text-to-video",
+    "text to video",
+    "retrieval-augmented generation",
+    "rag",
+    "fine-tuning",
+    "fine tuning",
+    "instruction tuning",
+    "robotics",
+]
+
+SCHOLAR_SNIPPET_NOISE = [
+    "all rights reserved, including rights for text and data mining and training of artificial intelligence technologies or similar technologies.",
+    "all rights reserved, including rights for text and data mining and training of artificial intelligence technologies or similar technologies",
+    "text and data mining and training of artificial intelligence technologies or similar technologies.",
+    "text and data mining and training of artificial intelligence technologies or similar technologies",
+    "artificial intelligence technologies or similar technologies",
+]
+
+SERPAPI_SCHOLAR_QUERY_SPECS = [
+    {
+        "query": os.environ.get("SERPAPI_SCHOLAR_QUERY_LLM", '"large language model"'),
+        "title_terms": [
+            "large language model",
+            "large language models",
+            "llm",
+            "llms",
+            "foundation model",
+            "foundation models",
+            "multimodal",
+            "generative ai",
+        ],
+        "limit": 3,
+    },
+    {
+        "query": os.environ.get("SERPAPI_SCHOLAR_QUERY_DEEP", '"deep learning"'),
+        "title_terms": [
+            "deep learning",
+            "neural network",
+            "neural networks",
+            "cnn",
+            "convolutional neural network",
+            "transformer",
+        ],
+        "limit": 2,
+    },
+    {
+        "query": os.environ.get("SERPAPI_SCHOLAR_QUERY_RL", '"reinforcement learning"'),
+        "title_terms": [
+            "reinforcement learning",
+            "policy optimization",
+            "q-learning",
+            "q learning",
+            "markov decision process",
+        ],
+        "limit": 1,
+    },
+]
 
 
 def to_iso(value):
@@ -135,6 +228,49 @@ def crossref_summary(item):
     if parts:
         return f"Publicado em {' · '.join(parts[:2])}."
     return "Artigo academico recente relacionado a IA."
+
+
+def count_term_hits(text, terms):
+    return sum(1 for term in terms if term in text)
+
+
+def clean_scholar_summary(text):
+    cleaned = clean_text(text)
+    for phrase in SCHOLAR_SNIPPET_NOISE:
+        cleaned = re.sub(re.escape(phrase), " ", cleaned, flags=re.IGNORECASE)
+    return clean_text(cleaned)
+
+
+def score_scholar_item(title, summary="", publication_summary=""):
+    title_text = clean_text(title).lower()
+    context_text = clean_text(f"{summary} {publication_summary}").lower()
+
+    title_primary = count_term_hits(title_text, AI_PRIMARY_TERMS)
+    title_secondary = count_term_hits(title_text, AI_SECONDARY_TERMS)
+    context_primary = count_term_hits(context_text, AI_PRIMARY_TERMS)
+    context_secondary = count_term_hits(context_text, AI_SECONDARY_TERMS)
+
+    score = 0
+    score += title_primary * 4
+    score += title_secondary * 2
+    score += context_primary * 2
+    score += context_secondary
+    return score
+
+
+def is_ai_focused_scholar_item(title, summary="", publication_summary=""):
+    title_text = clean_text(title).lower()
+    context_text = clean_text(f"{summary} {publication_summary}").lower()
+
+    title_hits = count_term_hits(title_text, AI_PRIMARY_TERMS + AI_SECONDARY_TERMS)
+    context_primary = count_term_hits(context_text, AI_PRIMARY_TERMS)
+    total_score = score_scholar_item(title, summary, publication_summary)
+    return title_hits >= 1 or (context_primary >= 2 and total_score >= 5)
+
+
+def title_matches_terms(title, terms):
+    title_text = clean_text(title).lower()
+    return any(term in title_text for term in terms)
 
 
 def extract_year(text):
@@ -347,7 +483,9 @@ def fetch_crossref_research():
         journal = clean_text((entry.get("container-title") or [""])[0])
         publisher = clean_text(entry.get("publisher"))
         source = journal or publisher or "Crossref"
-        score = score_item(title, summary)
+        score = score_scholar_item(title, summary, source)
+        if not is_ai_focused_scholar_item(title, summary, source):
+            continue
 
         items.append({
             "source": source,
@@ -357,7 +495,7 @@ def fetch_crossref_research():
             "url": url,
             "published_at": published_at,
             "authors": authors,
-            "score": score + 1,
+            "score": score,
             "scholar_url": scholar_search_url(title),
             "scholar_url_label": "Pesquisar no Google Academico",
         })
@@ -368,73 +506,121 @@ def fetch_crossref_research():
             key=lambda x: (x.get("score", 0), x.get("published_at") or ""),
             reverse=True,
         )
-        if item.get("score", 0) >= 2
+        if item.get("score", 0) >= 4
     ]
     return ranked[:8] or fallback_items("scholar")
 
 
 def fetch_serpapi_scholar():
     current_year = datetime.now(timezone.utc).year
-    params = {
-        "engine": "google_scholar",
-        "api_key": SERPAPI_API_KEY,
-        "q": SERPAPI_SCHOLAR_QUERY,
-        "hl": SERPAPI_SCHOLAR_HL,
-        "num": SERPAPI_SCHOLAR_NUM,
-        "as_ylo": current_year,
-        "as_yhi": current_year,
-        "scisbd": 2,
-    }
-    try:
-        data = request_json(SERPAPI_API_URL, params=params)
-    except requests.RequestException:
-        return None
+    selected_items = []
+    overflow_items = []
+    seen_titles = set()
+    successful_queries = 0
 
-    if data.get("error"):
-        return None
-
-    items = []
-    for entry in data.get("organic_results", []):
-        title = clean_text(entry.get("title"))
-        if not title:
-            continue
-
-        url = scholar_primary_link(entry)
-        if not url:
-            continue
-
-        summary = clean_text(entry.get("snippet", ""))[:400]
-        publication_summary, authors, published_at = scholar_publication_details(entry)
-        scholar_url, scholar_label = scholar_inline_links(entry)
-        cited_by = ((entry.get("inline_links") or {}).get("cited_by") or {}).get("total")
-        versions = ((entry.get("inline_links") or {}).get("versions") or {}).get("total")
-
-        item = {
-            "source": "Google Scholar",
-            "type": "scholar",
-            "title": title,
-            "summary": summary or publication_summary or "Resultado recente retornado pelo Google Acadêmico.",
-            "url": url,
-            "published_at": published_at,
-            "authors": authors,
-            "score": score_item(title, f"{summary} {publication_summary}") + 1,
-            "scholar_url": scholar_url or scholar_search_url(title),
-            "scholar_url_label": scholar_label or "Pesquisar no Google Acadêmico",
-            "publication_summary": publication_summary,
-            "cited_by_total": cited_by,
-            "versions_total": versions,
+    for spec in SERPAPI_SCHOLAR_QUERY_SPECS:
+        params = {
+            "engine": "google_scholar",
+            "api_key": SERPAPI_API_KEY,
+            "q": spec["query"],
+            "hl": SERPAPI_SCHOLAR_HL,
+            "num": SERPAPI_SCHOLAR_NUM,
+            "as_ylo": current_year,
+            "as_yhi": current_year,
+            "scisbd": 2,
         }
-        items.append(item)
+        try:
+            data = request_json(SERPAPI_API_URL, params=params)
+        except requests.RequestException:
+            continue
 
-    ranked = [item for item in items if item.get("score", 0) >= 2]
-    return ranked[:8] or None
+        if data.get("error"):
+            continue
+
+        successful_queries += 1
+        query_items = []
+        for entry in data.get("organic_results", []):
+            title = clean_text(entry.get("title"))
+            if not title or not title_matches_terms(title, spec["title_terms"]):
+                continue
+
+            url = scholar_primary_link(entry)
+            if not url:
+                continue
+
+            summary = clean_scholar_summary(entry.get("snippet", ""))[:400]
+            publication_summary, authors, published_at = scholar_publication_details(entry)
+            scholar_url, scholar_label = scholar_inline_links(entry)
+            cited_by = ((entry.get("inline_links") or {}).get("cited_by") or {}).get("total")
+            versions = ((entry.get("inline_links") or {}).get("versions") or {}).get("total")
+            score = score_scholar_item(title, summary, publication_summary)
+            if not is_ai_focused_scholar_item(title, summary, publication_summary) or score < 4:
+                continue
+
+            query_items.append({
+                "source": "Google Scholar",
+                "type": "scholar",
+                "title": title,
+                "summary": summary or publication_summary or "Resultado recente retornado pelo Google Acadêmico.",
+                "url": url,
+                "published_at": published_at,
+                "authors": authors,
+                "score": score,
+                "scholar_url": scholar_url or scholar_search_url(title),
+                "scholar_url_label": scholar_label or "Pesquisar no Google Acadêmico",
+                "publication_summary": publication_summary,
+                "cited_by_total": cited_by,
+                "versions_total": versions,
+            })
+
+        query_items.sort(
+            key=lambda x: (
+                x.get("score", 0),
+                x.get("cited_by_total") or 0,
+                x.get("published_at") or "",
+            ),
+            reverse=True,
+        )
+
+        added = 0
+        for item in query_items:
+            if item["title"] in seen_titles:
+                continue
+            if added < spec["limit"]:
+                selected_items.append(item)
+                seen_titles.add(item["title"])
+                added += 1
+            else:
+                overflow_items.append(item)
+
+    if not successful_queries:
+        return None
+
+    if len(selected_items) < 8:
+        overflow_items.sort(
+            key=lambda x: (
+                x.get("score", 0),
+                x.get("cited_by_total") or 0,
+                x.get("published_at") or "",
+            ),
+            reverse=True,
+        )
+        for item in overflow_items:
+            if item["title"] in seen_titles:
+                continue
+            selected_items.append(item)
+            seen_titles.add(item["title"])
+            if len(selected_items) >= 8:
+                break
+
+    return selected_items[:8] or None
 
 
 def fetch_scholar_research():
     if SERPAPI_API_KEY:
         scholar_items = fetch_serpapi_scholar()
         if scholar_items:
-            return scholar_items, "Google Academico ativo via SerpAPI."
+            return scholar_items, "Google Academico ativo via SerpAPI com filtro focado em IA."
         return fetch_crossref_research(), "SerpAPI configurada, mas a busca do Google Academico falhou nesta execucao; usando Crossref como fallback."
 
     return fetch_crossref_research(), "SERPAPI_API_KEY nao configurada; usando Crossref como fallback para a secao academica."

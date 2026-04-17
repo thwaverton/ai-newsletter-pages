@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-17T02:47:12.795958+00:00",
+  "generated_at": "2026-04-17T03:03:17.315585+00:00",
   "papers": [
     {
       "source": "arXiv",
@@ -210,105 +210,123 @@
   ],
   "scholar": [
     {
-      "source": "Computer Fraud and Security",
+      "source": "Google Scholar",
       "type": "scholar",
-      "title": "Protecting Brand Integrity Through Machine Learning: A Strategic Approach to IP Enforcement in E-Commerce",
-      "summary": "This comprehensive article outlines how ML technologies are changing IP enforcement in the e-commerce landscape in a way that protects brand integrity from sophisticated infringements. It traces the evolution of detection capabilities from initial text-based limitations, which proved vulnerable to strategic evasion, to the current generation of multimodal architectures that seamlessly integrate te",
-      "url": "https://doi.org/10.52710/cfs.1034",
-      "published_at": "2026-04-16T00:00:00+00:00",
+      "title": "Multimodal large language models in brain tumor imaging: clinical applications and future perspectives",
+      "summary": "2 days ago - … The foundation of MLLMs is typically a large language model (LLM) pretrained on extensive textual datasets. This backbone model functions as the primary reasoning and …",
+      "url": "https://link.springer.com/article/10.1007/s00117-026-01608-4",
+      "published_at": "2026-01-01T00:00:00+00:00",
       "authors": [
-        "Kanika Gupta"
+        "Y Wang",
+        "T Ma",
+        "H Wang"
       ],
-      "score": 4,
-      "scholar_url": "https://scholar.google.com/scholar?q=Protecting+Brand+Integrity+Through+Machine+Learning%3A+A+Strategic+Approach+to+IP+Enforcement+in+E-Commerce",
-      "scholar_url_label": "Pesquisar no Google Academico"
+      "score": 29,
+      "scholar_url": "https://scholar.google.com/scholar?q=related:ED6sCdrgKWEJ:scholar.google.com/&scioq=%22large+language+model%22&hl=en&scisbd=2&as_sdt=0,14",
+      "scholar_url_label": "Abrir no Google Acadêmico",
+      "publication_summary": "Y Wang, T Ma, H Wang - Die Radiologie, 2026 - Springer",
+      "cited_by_total": null,
+      "versions_total": null
     },
     {
-      "source": "Nature Communications",
+      "source": "Google Scholar",
       "type": "scholar",
-      "title": "Evaluating clinical competencies of large language models with a general practice benchmark",
-      "summary": "Publicado em Nature Communications · Springer Science and Business Media LLC.",
-      "url": "https://doi.org/10.1038/s41467-026-71622-6",
-      "published_at": "2026-04-16T00:00:00+00:00",
+      "title": "Estimation of histopathological types from breast MRI findings using a large language model",
+      "summary": "2 days ago - Purpose Large language models (LLMs) may hold the potential to infer pathological diagnoses from imaging findings such as computed tomography or magnetic …",
+      "url": "https://link.springer.com/article/10.1007/s11548-026-03619-x",
+      "published_at": "2026-01-01T00:00:00+00:00",
       "authors": [
-        "Zheqing Li",
-        "Yiying Yang",
-        "Jiping Lang",
-        "Wenhao Jiang",
-        "Junrong Chen",
-        "Yuhang Zhao"
+        "R Kanasaki",
+        "K Suzuki",
+        "T Ota",
+        "S Akashi-Tanaka"
       ],
-      "score": 4,
-      "scholar_url": "https://scholar.google.com/scholar?q=Evaluating+clinical+competencies+of+large+language+models+with+a+general+practice+benchmark",
-      "scholar_url_label": "Pesquisar no Google Academico"
+      "score": 20,
+      "scholar_url": "https://scholar.google.com/scholar?q=related:c4hgVu8hI7UJ:scholar.google.com/&scioq=%22large+language+model%22&hl=en&scisbd=2&as_sdt=0,14",
+      "scholar_url_label": "Abrir no Google Acadêmico",
+      "publication_summary": "R Kanasaki, K Suzuki, T Ota, S Akashi-Tanaka… - International Journal of …, 2026 - Springer",
+      "cited_by_total": null,
+      "versions_total": null
     },
     {
-      "source": "International Journal of Law and Management",
+      "source": "Google Scholar",
       "type": "scholar",
-      "title": "ChatGPT and the erosion of confidentiality: legal and ethical implications of generative AI use in public office",
-      "summary": "Purpose This paper aims to examine the scope of legal responsibility arising from violations of the obligation to maintain the confidentiality of public office information, particularly when such violations occur through the use of generative artificial intelligence (AI) systems, with ChatGPT serving as a representative example. It seeks to evaluate the extent to which established criminal and dis",
-      "url": "https://doi.org/10.1108/ijlma-02-2026-0097",
-      "published_at": "2026-04-17T00:00:00+00:00",
+      "title": "Simulating Public Opinion Propagation on Social Media Using Large Language Model-based Agents",
+      "summary": "2 days ago - … In this paper, we present a simulation of social network dynamics using agents powered by the GPT-4o large language model. These agents are designed with cognitive …",
+      "url": "https://link.springer.com/article/10.1007/s11518-026-5726-8",
+      "published_at": "2026-01-01T00:00:00+00:00",
       "authors": [
-        "Karem Sayed Aboelazm",
-        "Khalid Mohamed Dganni",
-        "Sumaya Aljahoori",
-        "Zahid Hussain"
+        "W Zheng",
+        "X Tang"
       ],
-      "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=ChatGPT+and+the+erosion+of+confidentiality%3A+legal+and+ethical+implications+of+generative+AI+use+in+public+office",
-      "scholar_url_label": "Pesquisar no Google Academico"
+      "score": 18,
+      "scholar_url": "https://scholar.google.com/scholar?q=related:r4CCxfUguBQJ:scholar.google.com/&scioq=%22large+language+model%22&hl=en&scisbd=2&as_sdt=0,14",
+      "scholar_url_label": "Abrir no Google Acadêmico",
+      "publication_summary": "W Zheng, X Tang - Journal of Systems Science and Systems Engineering, 2026 - Springer",
+      "cited_by_total": null,
+      "versions_total": null
     },
     {
-      "source": "Canadian Journal of Anesthesia/Journal canadien d'anesthésie",
+      "source": "Google Scholar",
       "type": "scholar",
-      "title": "Reflections on learning about artificial intelligence as a clinician",
-      "summary": "Publicado em Canadian Journal of Anesthesia/Journal canadien d'anesthésie · Springer Science and Business Media LLC.",
-      "url": "https://doi.org/10.1007/s12630-026-03109-3",
-      "published_at": "2026-04-17T00:00:00+00:00",
+      "title": "Attention-deficit/hyperactivity disorder classification in functional magnetic resonance images with deep learning",
+      "summary": "2 days ago - … (2022) explored spatio-temporal feature extraction using deep learning on rs-fMRI … Newer deep learning (DL) studies analyzing sMRI and fMRI data include Ding et al. (…",
+      "url": "https://link.springer.com/article/10.1007/s42600-026-00471-5",
+      "published_at": "2026-01-01T00:00:00+00:00",
       "authors": [
-        "Urooj Siddiqui"
+        "GR Pedrollo",
+        "AR Franco",
+        "A Balbinot"
       ],
-      "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=Reflections+on+learning+about+artificial+intelligence+as+a+clinician",
-      "scholar_url_label": "Pesquisar no Google Academico"
+      "score": 6,
+      "scholar_url": "https://scholar.google.com/scholar?q=related:SDg2od1cUzoJ:scholar.google.com/&scioq=%22deep+learning%22&hl=en&scisbd=2&as_sdt=0,36",
+      "scholar_url_label": "Abrir no Google Acadêmico",
+      "publication_summary": "GR Pedrollo, AR Franco, A Balbinot - Research on Biomedical …, 2026 - Springer",
+      "cited_by_total": null,
+      "versions_total": null
     },
     {
-      "source": "Multifunctional Materials and Structures II",
+      "source": "Google Scholar",
       "type": "scholar",
-      "title": "Coupled finite element-machine learning approach to investigate the effects of loading conditions on elastoplastic properties of polymers during nanoindentation",
-      "summary": "Publicado em Multifunctional Materials and Structures II · SPIE.",
-      "url": "https://doi.org/10.1117/12.3091488",
-      "published_at": "2026-04-17T00:00:00+00:00",
+      "title": "Impact of preprocessing cardiac magnetic resonance images for enhancing the performance of deep learning to segment myocardium",
+      "summary": "2 days ago - … The results demonstrate that effective preprocessing is a critical component in deep learning … strategies to optimize deep learning performance in medical image analysis. …",
+      "url": "https://link.springer.com/article/10.1007/s42600-026-00461-7",
+      "published_at": "2026-01-01T00:00:00+00:00",
       "authors": [
-        "Hamed Esmaeili",
-        "Reza Rizvi"
+        "SS Camargo",
+        "E Figueiredo",
+        "RC Coelho"
       ],
-      "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=Coupled+finite+element-machine+learning+approach+to+investigate+the+effects+of+loading+conditions+on+elastoplastic+properties+of+polymers+during+nanoindentation",
-      "scholar_url_label": "Pesquisar no Google Academico"
+      "score": 6,
+      "scholar_url": "https://scholar.google.com/scholar?q=related:XexsbRQtcpkJ:scholar.google.com/&scioq=%22deep+learning%22&hl=en&scisbd=2&as_sdt=0,36",
+      "scholar_url_label": "Abrir no Google Acadêmico",
+      "publication_summary": "SS Camargo, E Figueiredo, RC Coelho - Research on Biomedical …, 2026 - Springer",
+      "cited_by_total": null,
+      "versions_total": null
     },
     {
-      "source": "Advances in Cement Research",
+      "source": "Google Scholar",
       "type": "scholar",
-      "title": "Strength prediction of silicon–aluminum phosphate geopolymers using machine learning",
-      "summary": "Silico-aluminate phosphate (SAP) geopolymers are three-dimensional amorphous polymers formed by the reaction of aluminosilicate with phosphate. They exhibit high strength, excellent thermal resistance, and corrosion resistance, making them highly promising for applications such as construction materials, fireproof/anticorrosive coatings, and hazardous waste immobilization. However, current researc",
-      "url": "https://doi.org/10.1680/jadcr.25.00226",
-      "published_at": "2026-04-17T00:00:00+00:00",
+      "title": "Feeding control optimization based on reinforcement learning combined with background knowledge",
+      "summary": "2 days ago - … The aim of this paper is to develop a new feeding control optimization method based on reinforcement learning (RL) combined with background knowledge by simulation …",
+      "url": "https://link.springer.com/article/10.1007/s10499-026-02520-3",
+      "published_at": "2026-01-01T00:00:00+00:00",
       "authors": [
-        "Hui Lin",
-        "Jianhang Hu",
-        "Tianze Song",
-        "Yue Li"
+        "H Li",
+        "T Chen",
+        "J Mao"
       ],
-      "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=Strength+prediction+of+silicon%E2%80%93aluminum+phosphate+geopolymers+using+machine+learning",
-      "scholar_url_label": "Pesquisar no Google Academico"
+      "score": 6,
+      "scholar_url": "https://scholar.google.com/scholar?q=related:HeH75wlBhgoJ:scholar.google.com/&scioq=%22reinforcement+learning%22&hl=en&scisbd=2&as_sdt=0,11",
+      "scholar_url_label": "Abrir no Google Acadêmico",
+      "publication_summary": "H Li, T Chen, J Mao - Aquaculture International, 2026 - Springer",
+      "cited_by_total": null,
+      "versions_total": null
     }
   ],
   "notes": [
     "LinkedIn nao foi automatizado neste MVP porque scraping de posts e instavel e depende de ferramentas externas ou conta autenticada.",
-    "SERPAPI_API_KEY nao configurada; usando Crossref como fallback para a secao academica.",
+    "Google Academico ativo via SerpAPI com filtro focado em IA.",
     "Google Academico nao oferece feed publico nativo para esse fluxo; a integracao real usa SerpAPI quando a chave esta configurada.",
     "Para e-mail diario, configure os secrets opcionais do workflow."
   ]
