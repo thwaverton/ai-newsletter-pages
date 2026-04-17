@@ -47,6 +47,14 @@ BLOG_FEEDS = [
 CROSSREF_API_URL = "https://api.crossref.org/works"
 CROSSREF_QUERY = '"artificial intelligence" machine learning "large language model" "generative AI" multimodal reasoning'
 CROSSREF_DAYS_BACK = int(os.environ.get("CROSSREF_DAYS_BACK", "10"))
+SERPAPI_API_URL = "https://serpapi.com/search.json"
+SERPAPI_API_KEY = os.environ.get("SERPAPI_API_KEY")
+SERPAPI_SCHOLAR_QUERY = os.environ.get(
+    "SERPAPI_SCHOLAR_QUERY",
+    '"artificial intelligence" OR "machine learning" OR "large language model" OR "generative ai"',
+)
+SERPAPI_SCHOLAR_HL = os.environ.get("SERPAPI_SCHOLAR_HL", "en")
+SERPAPI_SCHOLAR_NUM = max(1, min(20, int(os.environ.get("SERPAPI_SCHOLAR_NUM", "20"))))
 REQUEST_HEADERS = {
     "User-Agent": "ai-daily-digest/1.0 (+https://thwaverton.github.io/ai-newsletter-pages/)"
 }
@@ -129,6 +137,59 @@ def crossref_summary(item):
     return "Artigo academico recente relacionado a IA."
 
 
+def extract_year(text):
+    if not text:
+        return None
+    match = re.search(r"\b(19|20)\d{2}\b", text)
+    return int(match.group(0)) if match else None
+
+
+def scholar_publication_details(item):
+    info = item.get("publication_info") or {}
+    summary = clean_text(info.get("summary"))
+    authors = []
+
+    for author in info.get("authors", [])[:6]:
+        name = clean_text(author.get("name"))
+        if name:
+            authors.append(name)
+
+    if not authors and summary:
+        author_part = summary.split(" - ", 1)[0]
+        if "," in author_part:
+            authors = [clean_text(name) for name in author_part.split(",")[:6] if clean_text(name)]
+
+    year = extract_year(summary)
+    published_at = None
+    if year:
+        published_at = datetime(year, 1, 1, tzinfo=timezone.utc).isoformat()
+
+    return summary, authors, published_at
+
+
+def scholar_primary_link(item):
+    if item.get("link"):
+        return item["link"]
+    for resource in item.get("resources", []):
+        if resource.get("link"):
+            return resource["link"]
+    return None
+
+
+def scholar_inline_links(item):
+    inline = item.get("inline_links") or {}
+    versions = inline.get("versions") or {}
+    cited_by = inline.get("cited_by") or {}
+
+    if versions.get("link"):
+        return versions.get("link"), "Ver versões no Google Acadêmico"
+    if cited_by.get("link"):
+        return cited_by.get("link"), "Ver citações no Google Acadêmico"
+    if inline.get("related_pages_link"):
+        return inline.get("related_pages_link"), "Abrir no Google Acadêmico"
+    return None, None
+
+
 def score_item(title, summary=""):
     text = f"{title} {summary}".lower()
     score = 0
@@ -153,6 +214,7 @@ def fallback_items(kind):
             "authors": ["Autor Exemplo"],
             "score": 1,
             "scholar_url": scholar_search_url("paper de IA"),
+            "scholar_url_label": "Pesquisar no Google Academico",
         }],
         "news": [{
             "source": "Google News",
@@ -182,6 +244,7 @@ def fallback_items(kind):
             "authors": ["Pesquisador Exemplo"],
             "score": 1,
             "scholar_url": scholar_search_url("pesquisa academica IA"),
+            "scholar_url_label": "Pesquisar no Google Academico",
         }],
     }
     return base[kind]
@@ -296,6 +359,7 @@ def fetch_crossref_research():
             "authors": authors,
             "score": score + 1,
             "scholar_url": scholar_search_url(title),
+            "scholar_url_label": "Pesquisar no Google Academico",
         })
 
     ranked = [
@@ -309,7 +373,74 @@ def fetch_crossref_research():
     return ranked[:8] or fallback_items("scholar")
 
 
-def build_digest(papers, news, blogs, scholar):
+def fetch_serpapi_scholar():
+    current_year = datetime.now(timezone.utc).year
+    params = {
+        "engine": "google_scholar",
+        "api_key": SERPAPI_API_KEY,
+        "q": SERPAPI_SCHOLAR_QUERY,
+        "hl": SERPAPI_SCHOLAR_HL,
+        "num": SERPAPI_SCHOLAR_NUM,
+        "as_ylo": current_year,
+        "as_yhi": current_year,
+        "scisbd": 2,
+    }
+    try:
+        data = request_json(SERPAPI_API_URL, params=params)
+    except requests.RequestException:
+        return None
+
+    if data.get("error"):
+        return None
+
+    items = []
+    for entry in data.get("organic_results", []):
+        title = clean_text(entry.get("title"))
+        if not title:
+            continue
+
+        url = scholar_primary_link(entry)
+        if not url:
+            continue
+
+        summary = clean_text(entry.get("snippet", ""))[:400]
+        publication_summary, authors, published_at = scholar_publication_details(entry)
+        scholar_url, scholar_label = scholar_inline_links(entry)
+        cited_by = ((entry.get("inline_links") or {}).get("cited_by") or {}).get("total")
+        versions = ((entry.get("inline_links") or {}).get("versions") or {}).get("total")
+
+        item = {
+            "source": "Google Scholar",
+            "type": "scholar",
+            "title": title,
+            "summary": summary or publication_summary or "Resultado recente retornado pelo Google Acadêmico.",
+            "url": url,
+            "published_at": published_at,
+            "authors": authors,
+            "score": score_item(title, f"{summary} {publication_summary}") + 1,
+            "scholar_url": scholar_url or scholar_search_url(title),
+            "scholar_url_label": scholar_label or "Pesquisar no Google Acadêmico",
+            "publication_summary": publication_summary,
+            "cited_by_total": cited_by,
+            "versions_total": versions,
+        }
+        items.append(item)
+
+    ranked = [item for item in items if item.get("score", 0) >= 2]
+    return ranked[:8] or None
+
+
+def fetch_scholar_research():
+    if SERPAPI_API_KEY:
+        scholar_items = fetch_serpapi_scholar()
+        if scholar_items:
+            return scholar_items, "Google Academico ativo via SerpAPI."
+        return fetch_crossref_research(), "SerpAPI configurada, mas a busca do Google Academico falhou nesta execucao; usando Crossref como fallback."
+
+    return fetch_crossref_research(), "SERPAPI_API_KEY nao configurada; usando Crossref como fallback para a secao academica."
+
+
+def build_digest(papers, news, blogs, scholar, scholar_note):
     return {
         "generated_at": iso_now(),
         "papers": sorted(papers, key=lambda x: (x.get("score", 0), x.get("published_at") or ""), reverse=True)[:6],
@@ -318,7 +449,8 @@ def build_digest(papers, news, blogs, scholar):
         "scholar": scholar[:6],
         "notes": [
             "LinkedIn nao foi automatizado neste MVP porque scraping de posts e instavel e depende de ferramentas externas ou conta autenticada.",
-            "Google Academico nao oferece um feed publico estavel para esse fluxo. Esta secao usa Crossref para achar artigos recentes e inclui atalho de busca por titulo no Google Academico.",
+            scholar_note,
+            "Google Academico nao oferece feed publico nativo para esse fluxo; a integracao real usa SerpAPI quando a chave esta configurada.",
             "Para e-mail diario, configure os secrets opcionais do workflow.",
         ],
     }
@@ -328,8 +460,8 @@ def main():
     papers = fetch_arxiv()
     news = fetch_google_news()
     blogs = fetch_blogs()
-    scholar = fetch_crossref_research()
-    digest = build_digest(papers, news, blogs, scholar)
+    scholar, scholar_note = fetch_scholar_research()
+    digest = build_digest(papers, news, blogs, scholar, scholar_note)
 
     for out_dir in (DATA_DIR, SITE_DATA_DIR):
         (out_dir / "latest.json").write_text(json.dumps(digest, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-17T02:37:59.628617+00:00",
+  "generated_at": "2026-04-17T02:47:12.795958+00:00",
   "papers": [
     {
       "source": "arXiv",
@@ -220,7 +220,8 @@
         "Kanika Gupta"
       ],
       "score": 4,
-      "scholar_url": "https://scholar.google.com/scholar?q=Protecting+Brand+Integrity+Through+Machine+Learning%3A+A+Strategic+Approach+to+IP+Enforcement+in+E-Commerce"
+      "scholar_url": "https://scholar.google.com/scholar?q=Protecting+Brand+Integrity+Through+Machine+Learning%3A+A+Strategic+Approach+to+IP+Enforcement+in+E-Commerce",
+      "scholar_url_label": "Pesquisar no Google Academico"
     },
     {
       "source": "Nature Communications",
@@ -238,7 +239,8 @@
         "Yuhang Zhao"
       ],
       "score": 4,
-      "scholar_url": "https://scholar.google.com/scholar?q=Evaluating+clinical+competencies+of+large+language+models+with+a+general+practice+benchmark"
+      "scholar_url": "https://scholar.google.com/scholar?q=Evaluating+clinical+competencies+of+large+language+models+with+a+general+practice+benchmark",
+      "scholar_url_label": "Pesquisar no Google Academico"
     },
     {
       "source": "International Journal of Law and Management",
@@ -254,7 +256,8 @@
         "Zahid Hussain"
       ],
       "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=ChatGPT+and+the+erosion+of+confidentiality%3A+legal+and+ethical+implications+of+generative+AI+use+in+public+office"
+      "scholar_url": "https://scholar.google.com/scholar?q=ChatGPT+and+the+erosion+of+confidentiality%3A+legal+and+ethical+implications+of+generative+AI+use+in+public+office",
+      "scholar_url_label": "Pesquisar no Google Academico"
     },
     {
       "source": "Canadian Journal of Anesthesia/Journal canadien d'anesthésie",
@@ -267,7 +270,8 @@
         "Urooj Siddiqui"
       ],
       "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=Reflections+on+learning+about+artificial+intelligence+as+a+clinician"
+      "scholar_url": "https://scholar.google.com/scholar?q=Reflections+on+learning+about+artificial+intelligence+as+a+clinician",
+      "scholar_url_label": "Pesquisar no Google Academico"
     },
     {
       "source": "Multifunctional Materials and Structures II",
@@ -281,7 +285,8 @@
         "Reza Rizvi"
       ],
       "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=Coupled+finite+element-machine+learning+approach+to+investigate+the+effects+of+loading+conditions+on+elastoplastic+properties+of+polymers+during+nanoindentation"
+      "scholar_url": "https://scholar.google.com/scholar?q=Coupled+finite+element-machine+learning+approach+to+investigate+the+effects+of+loading+conditions+on+elastoplastic+properties+of+polymers+during+nanoindentation",
+      "scholar_url_label": "Pesquisar no Google Academico"
     },
     {
       "source": "Advances in Cement Research",
@@ -297,12 +302,14 @@
         "Yue Li"
       ],
       "score": 3,
-      "scholar_url": "https://scholar.google.com/scholar?q=Strength+prediction+of+silicon%E2%80%93aluminum+phosphate+geopolymers+using+machine+learning"
+      "scholar_url": "https://scholar.google.com/scholar?q=Strength+prediction+of+silicon%E2%80%93aluminum+phosphate+geopolymers+using+machine+learning",
+      "scholar_url_label": "Pesquisar no Google Academico"
     }
   ],
   "notes": [
     "LinkedIn nao foi automatizado neste MVP porque scraping de posts e instavel e depende de ferramentas externas ou conta autenticada.",
-    "Google Academico nao oferece um feed publico estavel para esse fluxo. Esta secao usa Crossref para achar artigos recentes e inclui atalho de busca por titulo no Google Academico.",
+    "SERPAPI_API_KEY nao configurada; usando Crossref como fallback para a secao academica.",
+    "Google Academico nao oferece feed publico nativo para esse fluxo; a integracao real usa SerpAPI quando a chave esta configurada.",
     "Para e-mail diario, configure os secrets opcionais do workflow."
   ]
 }

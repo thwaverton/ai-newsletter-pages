@@ -41,7 +41,7 @@ function renderActions(item) {
   }
   return `
     <div class="actions">
-      <a href="${item.scholar_url}" target="_blank" rel="noreferrer">Abrir no Google Acadêmico</a>
+      <a href="${item.scholar_url}" target="_blank" rel="noreferrer">${item.scholar_url_label || 'Abrir no Google Acadêmico'}</a>
     </div>
   `;
 }
@@ -54,7 +54,23 @@ function formatMeta(item) {
   if (item.authors && item.authors.length) {
     parts.push(item.authors.slice(0, 3).join(', '));
   }
+  if (item.publication_summary) {
+    parts.push(truncate(item.publication_summary, 90));
+  }
+  if (item.cited_by_total) {
+    parts.push(`Citado por ${item.cited_by_total}`);
+  }
+  if (item.versions_total) {
+    parts.push(`${item.versions_total} versões`);
+  }
   return parts.join(' · ');
+}
+
+function truncate(value, maxLength) {
+  if (!value || value.length <= maxLength) {
+    return value || '';
+  }
+  return value.slice(0, maxLength - 1) + '…';
 }
 
 loadDigest().catch((err) => {

@@ -2,7 +2,8 @@
 
 Projeto simples para gerar uma newsletter diária de IA com:
 - papers recentes do arXiv
-- pesquisas acadêmicas recentes com atalho para busca no Google Acadêmico
+- resultados reais do Google Acadêmico via SerpAPI quando configurado
+- fallback para pesquisas acadêmicas recentes via Crossref quando a SerpAPI não estiver configurada
 - notícias recentes via Google News RSS
 - artigos e blogs de empresas de IA
 - site estático publicado no GitHub Pages
@@ -27,10 +28,17 @@ Se quiser receber no e-mail, adicione estes secrets no repositório:
 - `NEWSLETTER_TO`
 - `NEWSLETTER_FROM` (opcional)
 
+## Google Acadêmico via SerpAPI
+
+Para ativar resultados reais do Google Acadêmico, adicione este secret no repositório:
+- `SERPAPI_API_KEY`
+
+Sem esse secret, a seção acadêmica continua funcionando com fallback da Crossref.
+
 ## Limitações deste MVP
 
 - LinkedIn não foi integrado automaticamente porque scraping de posts é instável, depende de autenticação e pode exigir ferramentas externas.
-- Google Acadêmico não tem um feed público estável para rodar isso todo dia via GitHub Actions. Por isso, a seção acadêmica usa artigos recentes da Crossref e adiciona um link direto de busca por título no Google Acadêmico.
+- Google Acadêmico não tem um feed público estável para rodar isso todo dia via GitHub Actions. Por isso, a integração real depende da SerpAPI; sem a chave, a seção acadêmica usa Crossref como fallback.
 - Para ampliar fontes, adicione mais feeds RSS em `scripts/fetch_sources.py`.
 
 ## Estrutura

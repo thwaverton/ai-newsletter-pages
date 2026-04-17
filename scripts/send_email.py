@@ -14,7 +14,7 @@ def build_html(data):
         lis = "".join(
             (
                 f"<li><a href='{i['url']}'>{i['title']}</a>"
-                f"<br><small>{i.get('source','')} · {i.get('published_at','')}</small>"
+                f"<br><small>{build_meta(i)}</small>"
                 f"<p>{i.get('summary','')}</p>"
                 f"{build_scholar_link(i)}</li>"
             )
@@ -22,11 +22,20 @@ def build_html(data):
         )
         return f"<h2>{title}</h2><ul>{lis}</ul>"
 
+    def build_meta(item):
+        parts = [item.get("source", ""), item.get("published_at", "")]
+        if item.get("cited_by_total"):
+            parts.append(f"Citado por {item['cited_by_total']}")
+        if item.get("versions_total"):
+            parts.append(f"{item['versions_total']} versões")
+        return " · ".join([part for part in parts if part])
+
     def build_scholar_link(item):
         scholar_url = item.get("scholar_url")
         if not scholar_url:
             return ""
-        return f"<p><a href='{scholar_url}'>Buscar no Google Academico</a></p>"
+        label = item.get("scholar_url_label", "Buscar no Google Academico")
+        return f"<p><a href='{scholar_url}'>{label}</a></p>"
 
     return f"""
     <html>
