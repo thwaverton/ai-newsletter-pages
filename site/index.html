@@ -47,6 +47,57 @@
       </section>
     </main>
 
+    <aside class="library-dock" aria-label="Painel de biblioteca">
+      <button id="savedDockButton" class="dock-button" type="button" aria-controls="libraryPanel">
+        <span class="dock-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z" />
+          </svg>
+        </span>
+        <span class="dock-text">Salvos</span>
+        <span id="savedCount" class="dock-count">0</span>
+      </button>
+
+      <button id="historyDockButton" class="dock-button" type="button" aria-controls="libraryPanel">
+        <span class="dock-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M12 4a8 8 0 1 1-7.75 10h2.08A6 6 0 1 0 12 6a5.94 5.94 0 0 0-4.24 1.76L10 10H4V4l2.35 2.35A7.96 7.96 0 0 1 12 4Zm-1 4h2v4.2l3 1.8-1 1.73L11 13.3V8Z" />
+          </svg>
+        </span>
+        <span class="dock-text">Histórico</span>
+        <span id="historyCount" class="dock-count">0</span>
+      </button>
+    </aside>
+
+    <div id="libraryBackdrop" class="library-backdrop" hidden></div>
+
+    <aside id="libraryPanel" class="library-panel" aria-hidden="true">
+      <div class="library-header">
+        <div>
+          <p id="libraryEyebrow" class="library-eyebrow">Biblioteca</p>
+          <h2 id="libraryTitle">Salvos</h2>
+        </div>
+        <button id="closeLibraryButton" class="icon-button" type="button" aria-label="Fechar painel">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M6.7 5.3 12 10.6l5.3-5.3 1.4 1.4-5.3 5.3 5.3 5.3-1.4 1.4-5.3-5.3-5.3 5.3-1.4-1.4 5.3-5.3-5.3-5.3 1.4-1.4Z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="library-tabs" role="tablist" aria-label="Conteúdo salvo">
+        <button id="savedTabButton" class="library-tab is-active" type="button" role="tab" aria-selected="true">Salvos</button>
+        <button id="historyTabButton" class="library-tab" type="button" role="tab" aria-selected="false">Histórico</button>
+      </div>
+
+      <div class="library-toolbar">
+        <p id="libraryHint" class="library-hint">Arraste um card para o ícone de salvos ou use o botão Salvar.</p>
+        <button id="libraryClearButton" class="ghost-button" type="button">Limpar</button>
+      </div>
+
+      <div id="libraryList" class="library-list"></div>
+      <div id="libraryEmpty" class="library-empty" hidden></div>
+    </aside>
+
     <script src="main.js"></script>
   </body>
 </html>
