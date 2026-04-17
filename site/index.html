@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Daily Digest</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Atualizado automaticamente todos os dias</p>
+          <h1>AI Daily Digest</h1>
+          <p class="subtitle">Papers, notícias e artigos recentes sobre inteligência artificial.</p>
+        </div>
+        <div class="meta-card">
+          <span>Última atualização</span>
+          <strong id="generatedAt">carregando...</strong>
+          <a class="button" href="data/latest.json">Ver JSON bruto</a>
+        </div>
+      </header>
+
+      <section>
+        <h2>Papers</h2>
+        <div id="papers" class="grid"></div>
+      </section>
+
+      <section>
+        <h2>Notícias</h2>
+        <div id="news" class="grid"></div>
+      </section>
+
+      <section>
+        <h2>Artigos e blogs</h2>
+        <div id="blogs" class="grid"></div>
+      </section>
+
+      <section>
+        <h2>Observações do projeto</h2>
+        <ul id="notes"></ul>
+      </section>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>

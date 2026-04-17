@@ -1,0 +1,215 @@
+{
+  "generated_at": "2026-04-17T02:28:16.496585+00:00",
+  "papers": [
+    {
+      "source": "arXiv",
+      "type": "paper",
+      "title": "MM-WebAgent: A Hierarchical Multimodal Web Agent for Webpage Generation",
+      "summary": "The rapid progress of Artificial Intelligence Generated Content (AIGC) tools enables images, videos, and visualizations to be created on demand for webpage design, offering a flexible and increasingly adopted paradigm for modern UI/UX. However, directly integrating such tools into automated webpage generation often leads to style inconsistency and poor global coherence, as elements are generated i",
+      "url": "https://arxiv.org/abs/2604.15309v1",
+      "published_at": "2026-04-16T17:59:49Z",
+      "authors": [
+        "Yan Li",
+        "Zezi Zeng",
+        "Yifan Yang",
+        "Yuqing Yang",
+        "Ning Liao",
+        "Weiwei Guo"
+      ],
+      "score": 5
+    },
+    {
+      "source": "arXiv",
+      "type": "paper",
+      "title": "RAD-2: Scaling Reinforcement Learning in a Generator-Discriminator Framework",
+      "summary": "High-level autonomous driving requires motion planners capable of modeling multimodal future uncertainties while remaining robust in closed-loop interactions. Although diffusion-based planners are effective at modeling complex trajectory distributions, they often suffer from stochastic instabilities and the lack of corrective negative feedback when trained purely with imitation learning. To addres",
+      "url": "https://arxiv.org/abs/2604.15308v1",
+      "published_at": "2026-04-16T17:59:44Z",
+      "authors": [
+        "Hao Gao",
+        "Shaoyu Chen",
+        "Yifan Zhu",
+        "Yuehao Song",
+        "Wenyu Liu",
+        "Qian Zhang"
+      ],
+      "score": 2
+    },
+    {
+      "source": "arXiv",
+      "type": "paper",
+      "title": "Think in Latent Thoughts: A New Paradigm for Gloss-Free Sign Language Translation",
+      "summary": "Many SLT systems quietly assume that brief chunks of signing map directly to spoken-language words. That assumption breaks down because signers often create meaning on the fly using context, space, and movement. We revisit SLT and argue that it is mainly a cross-modal reasoning task, not just a straightforward video-to-text conversion. We thus introduce a reasoning-driven SLT framework that uses a",
+      "url": "https://arxiv.org/abs/2604.15301v1",
+      "published_at": "2026-04-16T17:57:24Z",
+      "authors": [
+        "Yiyang Jiang",
+        "Li Zhang",
+        "Xiao-Yong Wei",
+        "Li Qing"
+      ],
+      "score": 2
+    },
+    {
+      "source": "arXiv",
+      "type": "paper",
+      "title": "Generalization in LLM Problem Solving: The Case of the Shortest Path",
+      "summary": "Whether language models can systematically generalize remains actively debated. Yet empirical performance is jointly shaped by multiple factors such as training data, training paradigms, and inference-time strategies, making failures difficult to interpret. We introduce a controlled synthetic environment based on shortest-path planning, a canonical composable sequential optimization problem. The s",
+      "url": "https://arxiv.org/abs/2604.15306v1",
+      "published_at": "2026-04-16T17:59:43Z",
+      "authors": [
+        "Yao Tong",
+        "Jiayuan Ye",
+        "Anastasia Borovykh",
+        "Reza Shokri"
+      ],
+      "score": 1
+    },
+    {
+      "source": "arXiv",
+      "type": "paper",
+      "title": "Diagnosing LLM Judge Reliability: Conformal Prediction Sets and Transitivity Violations",
+      "summary": "LLM-as-judge frameworks are increasingly used for automatic NLG evaluation, yet their per-instance reliability remains poorly understood. We present a two-pronged diagnostic toolkit applied to SummEval: $\\textbf{(1)}$ a transitivity analysis that reveals widespread per-input inconsistency masked by low aggregate violation rates ($\\barρ = 0.8$-$4.1\\%$), with $33$-$67\\%$ of documents exhibiting at l",
+      "url": "https://arxiv.org/abs/2604.15302v1",
+      "published_at": "2026-04-16T17:58:21Z",
+      "authors": [
+        "Manan Gupta",
+        "Dhruv Kumar"
+      ],
+      "score": 1
+    },
+    {
+      "source": "arXiv",
+      "type": "paper",
+      "title": "AnimationBench: Are Video Models Good at Character-Centric Animation?",
+      "summary": "Video generation has advanced rapidly, with recent methods producing increasingly convincing animated results. However, existing benchmarks-largely designed for realistic videos-struggle to evaluate animation-style generation with its stylized appearance, exaggerated motion, and character-centric consistency. Moreover, they also rely on fixed prompt sets and rigid pipelines, offering limited flexi",
+      "url": "https://arxiv.org/abs/2604.15299v1",
+      "published_at": "2026-04-16T17:57:08Z",
+      "authors": [
+        "Leyi Wu",
+        "Pengjun Fang",
+        "Kai Sun",
+        "Yazhou Xing",
+        "Yinwei Wu",
+        "Songsong Wang"
+      ],
+      "score": 1
+    }
+  ],
+  "news": [
+    {
+      "source": "Google News",
+      "type": "news",
+      "title": "Machine learning avança na Ferrovia de Mato Grosso - Revista O Empreiteiro",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMicEFVX3lxTE56QmhNWENMdnkyX2d2RkYyWnRRa3VrZm5YVkEtZEVKTWlBOUltd3kyOUlqUVhXNVNRSHB6QW5fcHRHTkVBbnpyV00teGhkUFVqYlU2cGFNeEF1M2ZxVHoyOFNvaFVadkRwS2dBSFVWVUc?oc=5\" target=\"_blank\">Machine learning avança na Ferrovia de Mato Grosso</a>&nbsp;&nbsp;<font colo",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE56QmhNWENMdnkyX2d2RkYyWnRRa3VrZm5YVkEtZEVKTWlBOUltd3kyOUlqUVhXNVNRSHB6QW5fcHRHTkVBbnpyV00teGhkUFVqYlU2cGFNeEF1M2ZxVHoyOFNvaFVadkRwS2dBSFVWVUc?oc=5",
+      "published_at": "2026-04-16T18:01:48+00:00",
+      "score": 2
+    },
+    {
+      "source": "Google News",
+      "type": "news",
+      "title": "O erro de reduzir a inteligência artificial a uma simples ferramenta - Migalhas",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMirwFBVV95cUxPUGtfNzdsbFBoSU1acHlLMjViV0FHeF9ISW0wbWhrcjhhREs4YjVpM2llRGhPNVY2ODhabWNDYjQ2bTNKdmloN3l5Q0NGZWR6TmFqSWQ5enV3UXJISnlKN3VPblFYalMxS3FzWlg2RDh5ZGtYbHhBeDZfY2R1c1NJQWFsOTYwb3ZndGtNVXNRT1NvVTRZdkJhMkRhSWsxTXJBLUxqc0J4cG1VWVVhSmZV?oc=5\" target=",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPUGtfNzdsbFBoSU1acHlLMjViV0FHeF9ISW0wbWhrcjhhREs4YjVpM2llRGhPNVY2ODhabWNDYjQ2bTNKdmloN3l5Q0NGZWR6TmFqSWQ5enV3UXJISnlKN3VPblFYalMxS3FzWlg2RDh5ZGtYbHhBeDZfY2R1c1NJQWFsOTYwb3ZndGtNVXNRT1NvVTRZdkJhMkRhSWsxTXJBLUxqc0J4cG1VWVVhSmZV?oc=5",
+      "published_at": "2026-04-16T12:30:06+00:00",
+      "score": 1
+    },
+    {
+      "source": "Google News",
+      "type": "news",
+      "title": "Máquinas de pensar? - CartaCapital",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMibEFVX3lxTFAzWnREdUVYX0E0TW1EckdVbTBVcFF4bEV6c2NJT2duMzhXWXJTUDgzYU13akhET01Ta2JxT1VxWjAxUGpqMTlwdEJiS1BwakUwM2hVc0VZU2lwakhhSlYxc3lzZi1KY1VZeEpEaw?oc=5\" target=\"_blank\">Máquinas de pensar?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CartaCapital</font>",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFAzWnREdUVYX0E0TW1EckdVbTBVcFF4bEV6c2NJT2duMzhXWXJTUDgzYU13akhET01Ta2JxT1VxWjAxUGpqMTlwdEJiS1BwakUwM2hVc0VZU2lwakhhSlYxc3lzZi1KY1VZeEpEaw?oc=5",
+      "published_at": "2026-04-16T21:03:00+00:00",
+      "score": 0
+    },
+    {
+      "source": "Google News",
+      "type": "news",
+      "title": "Copa Sul-Sudeste: Volta Redonda pull clear, close to qualifying - OneFootball",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMirgFBVV95cUxORmhweHA4cEwtQlEwSHYtOEdvN3o4WjVVb3ozUXdXRUVnSWVpaTFKVExBT041bWJ4dnpheDZ5aHdyTEZFWWtpZ3Rsa1lqam1BSGthOEZRY0hxWkFMVXltS2ZqUlQxV1AzdElFWFZNWXZVOU43NTE5NkhZVXJnang1MjVsTWpmN2JnMGQyTmZEV1hPM0l4dFhYa0pvQnJPZ2xxZ0VpOXNtcDJTT2lUM3c?oc=5\" target=\"",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxORmhweHA4cEwtQlEwSHYtOEdvN3o4WjVVb3ozUXdXRUVnSWVpaTFKVExBT041bWJ4dnpheDZ5aHdyTEZFWWtpZ3Rsa1lqam1BSGthOEZRY0hxWkFMVXltS2ZqUlQxV1AzdElFWFZNWXZVOU43NTE5NkhZVXJnang1MjVsTWpmN2JnMGQyTmZEV1hPM0l4dFhYa0pvQnJPZ2xxZ0VpOXNtcDJTT2lUM3c?oc=5",
+      "published_at": "2026-04-16T15:45:58+00:00",
+      "score": 0
+    },
+    {
+      "source": "Google News",
+      "type": "news",
+      "title": "O que é 'jagged intelligence' — e como ela pode reformular o debate sobre IA? - Exame",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxOeGdvWWVVTXdVLWRZUUZWSVBuWlZtY29QMkVSQ1l4Q2M5U0NYWUZvazRaR2puNjFfelNJWEVTbHlPUlQ1RXphMFFfY3VjNzRSSVFLRDZUZnZJbDdHMW5vMlc0dzduQkl4RkRzR21oR3Jha01kMWQ3bWVvVUxWX1Z2anBObmozUFBQSFhvdVR6bi1vaG00dmFOSElpbDRjUjFZbWlHblRiOURzNXJ3ZUhLQlFuZ1doUQ?oc=",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOeGdvWWVVTXdVLWRZUUZWSVBuWlZtY29QMkVSQ1l4Q2M5U0NYWUZvazRaR2puNjFfelNJWEVTbHlPUlQ1RXphMFFfY3VjNzRSSVFLRDZUZnZJbDdHMW5vMlc0dzduQkl4RkRzR21oR3Jha01kMWQ3bWVvVUxWX1Z2anBObmozUFBQSFhvdVR6bi1vaG00dmFOSElpbDRjUjFZbWlHblRiOURzNXJ3ZUhLQlFuZ1doUQ?oc=5",
+      "published_at": "2026-04-16T14:53:06+00:00",
+      "score": 0
+    },
+    {
+      "source": "Google News",
+      "type": "news",
+      "title": "Tesla stock in the red today after Wednesday's 7% surge: what's going on? - TradingView – Acompanhe todos os mercados",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMixAFBVV95cUxOdkJOTjFtRWdGQVVfaVJiVDkwajBnLVY1X1doWDdqc0l3NmVVVWdzQkI2M0tCd2VzYlBrQk1Ub2U0YW9lNzJyQXE1Q1lnNGtmcUF6U05oby00c0YzY0RTX2RKSmtPN1RkeUNXMEZBNUhmS1hFWU5ZZzd2dC1IaldnSkhQSG5aZ0dicnp0YnhGQ1NoQW1Ca0hJakV5T080ajZvMTcxVTFEZDF3SUY4OUdmV1dveFpZeWNQej",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOdkJOTjFtRWdGQVVfaVJiVDkwajBnLVY1X1doWDdqc0l3NmVVVWdzQkI2M0tCd2VzYlBrQk1Ub2U0YW9lNzJyQXE1Q1lnNGtmcUF6U05oby00c0YzY0RTX2RKSmtPN1RkeUNXMEZBNUhmS1hFWU5ZZzd2dC1IaldnSkhQSG5aZ0dicnp0YnhGQ1NoQW1Ca0hJakV5T080ajZvMTcxVTFEZDF3SUY4OUdmV1dveFpZeWNQejk2YVRUTUpCMU42?oc=5",
+      "published_at": "2026-04-16T14:30:01+00:00",
+      "score": 0
+    }
+  ],
+  "blogs": [
+    {
+      "source": "AI",
+      "type": "research_blog",
+      "title": "A new way to explore the web with AI Mode in Chrome",
+      "summary": "AI Mode in Chrome",
+      "url": "https://blog.google/products-and-platforms/products/search/ai-mode-chrome/",
+      "published_at": "2026-04-16T17:00:00+00:00",
+      "score": 0
+    },
+    {
+      "source": "AI",
+      "type": "research_blog",
+      "title": "New ways to create personalized images in the Gemini app",
+      "summary": "Example images made with Personal Intelligence",
+      "url": "https://blog.google/innovation-and-ai/products/gemini-app/personal-intelligence-nano-banana/",
+      "published_at": "2026-04-16T16:00:00+00:00",
+      "score": 0
+    },
+    {
+      "source": "OpenAI News",
+      "type": "research_blog",
+      "title": "Codex for (almost) everything",
+      "summary": "The updated Codex app for macOS and Windows adds computer use, in-app browsing, image generation, memory, and plugins to accelerate developer workflows.",
+      "url": "https://openai.com/index/codex-for-almost-everything",
+      "published_at": "2026-04-16T10:00:00+00:00",
+      "score": 0
+    },
+    {
+      "source": "OpenAI News",
+      "type": "research_blog",
+      "title": "Introducing GPT-Rosalind for life sciences research",
+      "summary": "OpenAI introduces GPT-Rosalind, a frontier reasoning model built to accelerate drug discovery, genomics analysis, protein reasoning, and scientific research workflows.",
+      "url": "https://openai.com/index/introducing-gpt-rosalind",
+      "published_at": "2026-04-16T01:00:00+00:00",
+      "score": 1
+    },
+    {
+      "source": "OpenAI News",
+      "type": "research_blog",
+      "title": "Accelerating the cyber defense ecosystem that protects us all",
+      "summary": "Leading security firms and enterprises join OpenAI’s Trusted Access for Cyber, using GPT-5.4-Cyber and $10M in API grants to strengthen global cyber defense.",
+      "url": "https://openai.com/index/accelerating-cyber-defense-ecosystem",
+      "published_at": "2026-04-16T00:00:00+00:00",
+      "score": 0
+    },
+    {
+      "source": "AI",
+      "type": "research_blog",
+      "title": "Gemini 3.1 Flash TTS: the next generation of expressive AI speech",
+      "summary": "Gemini logo next to the text \"3.1 Flash TTS\", all over colored dots",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-tts/",
+      "published_at": "2026-04-15T15:00:00+00:00",
+      "score": 0
+    }
+  ],
+  "notes": [
+    "LinkedIn nao foi automatizado neste MVP porque scraping de posts e instavel e depende de ferramentas externas ou conta autenticada.",
+    "Para e-mail diario, configure os secrets opcionais do workflow."
+  ]
+}
